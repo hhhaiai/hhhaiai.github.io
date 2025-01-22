@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>android Battery Historian 分析电池用量</title>
+    <url>/p/e0a8d029/</url>
+    <content><![CDATA[<h1 id="工具说明"><a href="#工具说明" class="headerlink" title="工具说明"></a>工具说明</h1><p>Battery Historian 是与 Batterystats 联合使用的google推出的用于分析耗电情况的工具。</p>
+<p>Batterystats 是包含在 Android 框架中的一种工具，用于收集设备上的电池数据。</p>
+<p>您可以使用 adb 将收集的电池数据转储到开发机器，并生成可使用 Battery Historian 分析的报告。</p>
+<p>Battery Historian 会将报告从 Batterystats 转换为可在浏览器中查看的 HTML 直观视图。</p>
+<span id="more"></span>
+
+<h1 id="适合的场景"><a href="#适合的场景" class="headerlink" title="适合的场景"></a>适合的场景</h1><p>显示进程从什么位置以及通过何种方式消耗电池电量。</p>
+<p>识别系统为了延长电池续航时间可能会延迟甚至移除应用中的哪些任务。</p>
+<p>Battery Historian 可以显示应用是否具有以下行为：</p>
+<ul>
+<li>过于频繁地触发唤醒提醒（至少每 10 秒钟一次）。</li>
+<li>持续保留 GPS 锁定。</li>
+<li>至少每 30 秒调度一次作业。</li>
+<li>至少每 30 秒调度一次同步。</li>
+<li>使用手机无线装置的频率高于预期。</li>
+</ul>
+<h1 id="部署方式"><a href="#部署方式" class="headerlink" title="部署方式"></a>部署方式</h1><h2 id="部署步骤"><a href="#部署步骤" class="headerlink" title="部署步骤"></a>部署步骤</h2><p>有两种部署方式，分为docker安装和自行编译安装。参考<a href="https://github.com/google/battery-historian">开源自述文件</a></p>
+<p>这里推荐使用docker安装是最方便快捷的。</p>
+<p>安装步骤如下：</p>
+<ol>
+<li>保证服务器 docker 环境没问题，可以使用<code>docker run hello-world</code>命令进行检查。</li>
+<li>执行 <code>docker -- run -p &lt;port&gt;:9999 gcr.io/android-battery-historian/stable:3.0 --port 9999</code>进行安装。等待安装完毕。</li>
+<li>打开 <code>http://localhost:&lt;port&gt;</code>检查是否成功。</li>
+</ol>
+<h2 id="之前部署遇到的问题记录"><a href="#之前部署遇到的问题记录" class="headerlink" title="之前部署遇到的问题记录"></a>之前部署遇到的问题记录</h2><p><strong>1. 官方给到的 docker 镜像地址无法访问，可能需要翻墙。</strong></p>
+<p>解决方法：参考 <a href="https://juejin.im/entry/5d61fc3ff265da038f4818a5">https://juejin.im/entry/5d61fc3ff265da038f4818a5</a> 使用国内镜像源</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run --restart=always -d -p 9999:9999 gcr.io/android-battery-historian/stable:3.0 --port 9999</span><br></pre></td></tr></table></figure>
+<p>改为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run --restart=always -d -p 9999:9999 registry.cn-hangzhou.aliyuncs.com/xyz10/android-battery-historian:stable-3.0 --port 9999</span><br></pre></td></tr></table></figure>
+<p><strong>2. docker 部署完成之后，无法访问，d3.js 找不到。</strong> (后面会考虑直接把修改好的docker image 直接推到个人地址上去。)</p>
+<p>解决方法：参考 <a href="https://github.com/google/battery-historian/issues/185">https://github.com/google/battery-historian/issues/185</a> ， 更改相关js的代码路径。</p>
+<p><strong>3. 1 - 2 都解决后，能访问，但无法传Batterystats分析文件上去，表现为上传无反应。</strong></p>
+<p>解决方法：访问该网站的本机也要可以科学上网，就没问题了。</p>
+<h1 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h1><p>使用步骤如下:</p>
+<p>如需使用 Batterystats 从您的设备收集数据并在 Battery Historian 中打开该数据，请执行以下操作：</p>
+<ol>
+<li>连接机器 重置电池记录数据 adb shell dumpsys batterystats –reset</li>
+<li>断开充电线，开始操作</li>
+<li>使用原始数据生成报告。<ul>
+<li>对于搭载 Android 7.0 及更高版本的设备：<br><code>adb bugreport &gt; [path/]bugreport.zip</code></li>
+<li>对于搭载 Android 6.0 及更低版本的设备：<br><code>adb bugreport &gt; [path/]bugreport.txt</code></li>
+</ul>
+</li>
+<li>数据上传 http:&#x2F;&#x2F;[ip]:9999&#x2F; submit 开始分析。</li>
+</ol>
+<p>以下文档可供参考：</p>
+<ul>
+<li>工具代码地址：<a href="https://github.com/google/battery-historian">https://github.com/google/battery-historian</a></li>
+<li>官方文档：<a href="https://developer.android.google.cn/topic/performance/power/setup-battery-historian?hl=zh-cn">https://developer.android.google.cn/topic/performance/power/setup-battery-historian?hl=zh-cn</a></li>
+<li>相关耗电优化案例文章：<a href="https://tech.meituan.com/2018/03/11/dianping-shortvideo-battery-testcase.html">https://tech.meituan.com/2018/03/11/dianping-shortvideo-battery-testcase.html</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>安卓</tag>
+        <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>热烈庆贺打井队成立</title>
+    <url>/p/2d0c2935/</url>
+    <content><![CDATA[<hr>
+<blockquote>
+<p>热烈庆贺打井队成立！以后该博客会和大家一起探讨各种技术和相关看法</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="成员介绍"><a href="#成员介绍" class="headerlink" title="成员介绍"></a>成员介绍</h2><p>现是个人的项目</p>
+<h2 id="方向"><a href="#方向" class="headerlink" title="方向"></a>方向</h2><p>未来会从很多个专栏的方式去维护</p>
+]]></content>
+      <tags>
+        <tag>规划</tag>
+        <tag>预告</tag>
+        <tag>闲聊</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>转瞬而去的2024</title>
+    <url>/p/2d0c2333/</url>
+    <content><![CDATA[<hr>
+<h1 id="复盘下"><a href="#复盘下" class="headerlink" title="复盘下"></a>复盘下</h1><p>2024瞬间过去了，今年经历了很多，换了工作，娃儿上学了，幼儿园跑路了。。。 。。。</p>
+<span id="more"></span>
+
+<h2 id="精彩瞬间"><a href="#精彩瞬间" class="headerlink" title="精彩瞬间"></a>精彩瞬间</h2><ol>
+<li>2024年从老东家易观离开，祝老东家越来越好</li>
+<li>2024做了数据分析、安全防护、反作弊、AI翻译，AI对话</li>
+<li>认识一群志同道合的兄弟,一起做社交</li>
+<li>开始做一些认知之外的事情，逐步的推进</li>
+</ol>
+<h2 id="打算"><a href="#打算" class="headerlink" title="打算"></a>打算</h2><ol>
+<li>开始维护一个博客，分享技术，管理，技术方向</li>
+<li>利用社会化资源，搭建一个共享的AI服务，分享搭建的技术</li>
+<li>发布一些自己使用的工具方法</li>
+<li>更加聚焦,做一些意义重要的事情！</li>
+<li>立志改变世界</li>
+</ol>
+<h2 id="！重要！"><a href="#！重要！" class="headerlink" title="！重要！"></a>！重要！</h2><ol>
+<li>欢迎 o.o 同志</li>
+<li>努力做一个好父亲</li>
+<li>努力做一个好丈夫</li>
+<li>努力做一个好姑爷</li>
+<li>努力做一个好儿子</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>闲聊</tag>
+      </tags>
+  </entry>
+</search>
