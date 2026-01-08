@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/favicon-32x32.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hhhaiai.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":{"gitalk":{"order":-2}},"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"fadeIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="详细介绍 Battery Historian 工具使用方法，包括 Docker 部署步骤、常见问题解决、数据分析技巧，帮助 Android 开发者快速定位和优化应用耗电问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Battery Historian 分析 Android 耗电问题实战教程">
+<meta property="og:url" content="https://hhhaiai.github.io/p/e0a8d029/">
+<meta property="og:site_name" content="专业打井队 - 技术博客">
+<meta property="og:description" content="详细介绍 Battery Historian 工具使用方法，包括 Docker 部署步骤、常见问题解决、数据分析技巧，帮助 Android 开发者快速定位和优化应用耗电问题。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-07-17T04:18:46.000Z">
+<meta property="article:modified_time" content="2026-01-08T07:30:00.000Z">
+<meta property="article:author" content="sanbo">
+<meta property="article:tag" content="安卓">
+<meta property="article:tag" content="技术">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://hhhaiai.github.io/p/e0a8d029/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "专业打井队 - 技术博客",
+  "url": "https://hhhaiai.github.io",
+  "description": "专业打井队提供数据采集、音视频开发、技术管理和AI量化研究的实战经验与深度分析。专注从0到1的技术架构与团队管理优化。",
+  "logo": "https://raw.githubusercontent.com/hhhaiai/Picture/main/img/202501190050490.png",
+  "sameAs": [
+    "https://github.com/hhhaiai",
+    "https://x.com/sanbo110"
+  ]
+}
+</script>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "专业打井队 - 技术博客",
+  "url": "https://hhhaiai.github.io"
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://hhhaiai.github.io"
+    }
+    ,
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Battery Historian 分析 Android 耗电问题实战教程",
+      "item": "https://hhhaiai.github.io/p/e0a8d029/"
+    }
+  ]
+}
+</script>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Battery Historian 分析 Android 耗电问题实战教程",
+  "description": "详细介绍 Battery Historian 工具使用方法，包括 Docker 部署步骤、常见问题解决、数据分析技巧，帮助 Android 开发者快速定位和优化应用耗电问题。",
+  "author": {
+    "@type": "Person",
+    "name": "sanbo"
+  },
+  "datePublished": "2020-07-17",
+  "dateModified": "2026-01-08",
+  "publisher": {
+    "@type": "Organization",
+    "name": "专业打井队 - 技术博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://raw.githubusercontent.com/hhhaiai/Picture/main/img/202501190050490.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://hhhaiai.github.io/p/e0a8d029/"
+  }
+  ,
+  "keywords": "安卓, 技术"
+}
+</script>
+
+
+<link rel="sitemap" type="application/xml" title="Sitemap" href="https://hhhaiai.github.io/sitemap.xml" />
+<link rel="alternate" type="application/atom+xml" title="RSS Feed" href="https://hhhaiai.github.io/atom.xml" />
+
+
+
+
+
+<meta name="author" content="sanbo" />
+<meta name="robots" content="index, follow" />
+<meta name="googlebot" content="index, follow" />
+
+
+<meta name="twitter:creator" content="@sanbo110" />
+<meta name="twitter:image" content="https://raw.githubusercontent.com/hhhaiai/Picture/main/img/202501190050490.png" />
+
+
+<meta name="publisher" content="专业打井队 - 技术博客" />
+<meta name="copyright" content="Copyright sanbo - All rights reserved" />
+
+
+<meta http-equiv="Content-Language" content="zh-CN" />
+
+
+<meta name="theme-color" content="#0298E0" />
+<meta name="msapplication-navbutton-color" content="#0298E0" />
+<meta name="apple-mobile-web-app-status-bar-style" content="#0298E0" />
+
+
+<meta name="rating" content="general" />
+<meta name="revisit-after" content="7 days" />
+<meta name="web_author" content="sanbo" />
+  <title>Battery Historian 分析 Android 耗电问题实战教程 | 专业打井队 - 技术博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">专业打井队 - 技术博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">数据采集 · 音视频 · 技术管理 · AI量化</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+    <div class="search-buttons-container">
+      <button class="search-clear-btn" type="button" aria-label="Clear">
+        <i class="fa fa-times"></i>
+      </button>
+      <button class="search-confirm-btn" type="button" aria-label="Search">
+        <i class="fa fa-search"></i>
+      </button>
+    </div>
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-search fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hhhaiai.github.io/p/e0a8d029/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/hhhaiai/Picture/main/img/202501190050490.png">
+      <meta itemprop="name" content="sanbo">
+      <meta itemprop="description" content="专业打井队提供数据采集、音视频开发、技术管理和AI量化研究的实战经验与深度分析。专注从0到1的技术架构与团队管理优化。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="专业打井队 - 技术博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Battery Historian 分析 Android 耗电问题实战教程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-17 12:18:46" itemprop="dateCreated datePublished" datetime="2020-07-17T12:18:46+08:00">2020-07-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-01-08 15:30:00" itemprop="dateModified" datetime="2026-01-08T15:30:00+08:00">2026-01-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">开发</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">详细介绍 Battery Historian 工具使用方法，包括 Docker 部署步骤、常见问题解决、数据分析技巧，帮助 Android 开发者快速定位和优化应用耗电问题。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Battery-Historian-工具概述"><a href="#Battery-Historian-工具概述" class="headerlink" title="Battery Historian 工具概述"></a>Battery Historian 工具概述</h1><p><strong>Battery Historian</strong> 是 Google 官方推出的 Android 耗电分析工具，与 Android 内置的 Batterystats 数据收集器配合使用。它能帮助开发者：</p>
+<ul>
+<li>📊 可视化分析应用耗电行为</li>
+<li>🔍 识别唤醒锁、GPS、后台任务等耗电源</li>
+<li>🎯 定位导致电池续航降低的具体问题</li>
+<li>⚡ 提供优化建议和最佳实践</li>
+</ul>
+<span id="more"></span>
+
+<h2 id="核心技术原理"><a href="#核心技术原理" class="headerlink" title="核心技术原理"></a>核心技术原理</h2><h3 id="Batterystats-数据收集"><a href="#Batterystats-数据收集" class="headerlink" title="Batterystats 数据收集"></a>Batterystats 数据收集</h3><p>BatteryStats 是 Android 框架内置的电池数据收集工具，记录以下关键指标：</p>
+<ul>
+<li>CPU 使用情况和唤醒事件</li>
+<li>Wi-Fi、蓝牙、GPS 等传感器状态</li>
+<li>屏幕亮灭时间</li>
+<li>应用后台活动和网络请求</li>
+<li>电池电量变化曲线</li>
+</ul>
+<h3 id="Historian-数据可视化"><a href="#Historian-数据可视化" class="headerlink" title="Historian 数据可视化"></a>Historian 数据可视化</h3><p>Battery Historian 将原始的 Batterystats 数据转换为交互式 HTML 报告，支持：</p>
+<ul>
+<li>时间轴视图展示系统事件</li>
+<li>应用级耗电详情对比</li>
+<li>按事件类型筛选分析</li>
+<li>生成可分享的详细报告</li>
+</ul>
+<h2 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h2><p>Battery Historian 特别适用于以下问题排查：</p>
+<ul>
+<li>🔔 <strong>频繁唤醒</strong>：应用是否每 10 秒触发一次唤醒导致耗电</li>
+<li>📍 <strong>GPS 持续锁定</strong>：是否未及时释放位置服务</li>
+<li>🔄 <strong>后台任务调度</strong>：作业&#x2F;同步任务是否过于频繁（每 30 秒）</li>
+<li>📡 <strong>网络请求异常</strong>：无线模块使用频率是否过高</li>
+<li>🔋 <strong>电池续航优化</strong>：识别可延迟或移除的后台任务</li>
+</ul>
+<h2 id="Docker-部署指南"><a href="#Docker-部署指南" class="headerlink" title="Docker 部署指南"></a>Docker 部署指南</h2><h3 id="推荐部署方式"><a href="#推荐部署方式" class="headerlink" title="推荐部署方式"></a>推荐部署方式</h3><p>相比源码编译，<strong>Docker 部署</strong>是最简单快捷的方式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 步骤1: 验证 Docker 环境</span></span><br><span class="line">docker run hello-world</span><br><span class="line"></span><br><span class="line"><span class="comment"># 步骤2: 启动 Battery Historian 服务</span></span><br><span class="line">docker run --restart=always -d -p 9999:9999 gcr.io/android-battery-historian/stable:3.0 --port 9999</span><br><span class="line"></span><br><span class="line"><span class="comment"># 步骤3: 访问服务</span></span><br><span class="line"><span class="comment"># 打开浏览器访问: http://localhost:9999</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="常见部署问题与解决方案"><a href="#常见部署问题与解决方案" class="headerlink" title="常见部署问题与解决方案"></a>常见部署问题与解决方案</h3><h4 id="问题1-官方镜像无法访问"><a href="#问题1-官方镜像无法访问" class="headerlink" title="问题1: 官方镜像无法访问"></a>问题1: 官方镜像无法访问</h4><p><strong>现象</strong>：<code>gcr.io</code> 镜像地址被墙，无法下载。</p>
+<p><strong>解决方案</strong>：使用国内镜像源替代：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 替换为阿里云镜像</span></span><br><span class="line">docker run --restart=always -d -p 9999:9999 registry.cn-hangzhou.aliyuncs.com/xyz10/android-battery-historian:stable-3.0 --port 9999</span><br></pre></td></tr></table></figure>
+
+<h4 id="问题2-D3-js-资源加载失败"><a href="#问题2-D3-js-资源加载失败" class="headerlink" title="问题2: D3.js 资源加载失败"></a>问题2: D3.js 资源加载失败</h4><p><strong>现象</strong>：页面可以访问，但图表无法显示，控制台报 D3.js 404 错误。</p>
+<p><strong>解决方案</strong>：修改容器内 JS 路径配置：</p>
+<ul>
+<li>参考 GitHub Issue: <a target="_blank" rel="noopener" href="https://github.com/google/battery-historian/issues/185">battery-historian#185</a></li>
+<li>修改 Docker 容器内的静态资源路径映射</li>
+</ul>
+<h4 id="问题3-文件上传无响应"><a href="#问题3-文件上传无响应" class="headerlink" title="问题3: 文件上传无响应"></a>问题3: 文件上传无响应</h4><p><strong>现象</strong>：界面正常，但上传 bugreport.zip 后无反应。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>确保访问页面的主机可以访问 Google 服务（科学上网）</li>
+<li>或使用离线分析模式，先在本地生成完整报告</li>
+</ul>
+<h2 id="数据分析实战"><a href="#数据分析实战" class="headerlink" title="数据分析实战"></a>数据分析实战</h2><h3 id="Step-1-收集电池数据"><a href="#Step-1-收集电池数据" class="headerlink" title="Step 1: 收集电池数据"></a>Step 1: 收集电池数据</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 连接设备并重置电池记录</span></span><br><span class="line">adb shell dumpsys batterystats --reset</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 断开充电线，开始进行典型用户操作</span></span><br><span class="line"><span class="comment">#    (正常使用 30-60 分钟)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 生成 bugreport</span></span><br><span class="line">adb bugreport &gt; bugreport.zip</span><br></pre></td></tr></table></figure>
+
+<h3 id="Step-2-分析电池报告"><a href="#Step-2-分析电池报告" class="headerlink" title="Step 2: 分析电池报告"></a>Step 2: 分析电池报告</h3><ol>
+<li>访问 <code>http://localhost:9999</code></li>
+<li>上传 <code>bugreport.zip</code> 文件</li>
+<li>等待分析完成，查看 HTML 报告</li>
+</ol>
+<h3 id="Step-3-关键指标解读"><a href="#Step-3-关键指标解读" class="headerlink" title="Step 3: 关键指标解读"></a>Step 3: 关键指标解读</h3><p>在生成的报告中重点关注：</p>
+<ul>
+<li>⏰ <strong>Wake Lock 次数和时长</strong>：过长的唤醒锁会导致屏幕无法休眠</li>
+<li>📈 <strong>CPU 使用率</strong>：后台任务是否过度占用 CPU</li>
+<li>📡 <strong>网络活动</strong>：数据传输是否集中在某个时间段</li>
+<li>📍 <strong>定位服务</strong>：GPS 持续锁定的时间</li>
+<li>🔋 <strong>电量曲线</strong>：哪些事件导致电量快速下降</li>
+</ul>
+<h2 id="进阶优化建议"><a href="#进阶优化建议" class="headerlink" title="进阶优化建议"></a>进阶优化建议</h2><h3 id="耗电优化方向"><a href="#耗电优化方向" class="headerlink" title="耗电优化方向"></a>耗电优化方向</h3><ol>
+<li><p><strong>优化唤醒频率</strong></p>
+<ul>
+<li>减少 AlarmManager 使用频率</li>
+<li>使用 WorkManager 替代频繁轮询</li>
+</ul>
+</li>
+<li><p><strong>合理管理定位</strong></p>
+<ul>
+<li>及时释放 LocationManager</li>
+<li>使用 Fused Location Provider</li>
+</ul>
+</li>
+<li><p><strong>后台任务优化</strong></p>
+<ul>
+<li>批量化网络请求</li>
+<li>使用 JobScheduler 合并任务</li>
+</ul>
+</li>
+<li><p><strong>资源释放</strong></p>
+<ul>
+<li>完整释放 WakeLock</li>
+<li>及时关闭传感器</li>
+</ul>
+</li>
+</ol>
+<h2 id="参考资源"><a href="#参考资源" class="headerlink" title="参考资源"></a>参考资源</h2><ul>
+<li>📚 <strong>官方文档</strong>: <a target="_blank" rel="noopener" href="https://developer.android.google.cn/topic/performance/power/setup-battery-historian?hl=zh-cn">Android Developer - Battery Historian</a></li>
+<li>🛠️ <strong>工具源码</strong>: <a target="_blank" rel="noopener" href="https://github.com/google/battery-historian">GitHub - battery-historian</a></li>
+<li>📖 <strong>优化案例</strong>: <a target="_blank" rel="noopener" href="https://tech.meituan.com/2018/03/11/dianping-shortvideo-battery-testcase.html">美团点评 - 短视频耗电优化</a></li>
+<li>🔧 <strong>调试指南</strong>: <a target="_blank" rel="noopener" href="https://developer.android.com/topic/performance/power">Android 电源管理官方文档</a></li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Battery Historian 是 Android 开发者进行电池优化的必备工具。通过 Docker 部署快速搭建环境，配合系统化的数据分析方法，能够有效定位和解决应用耗电问题，提升用户体验。</p>
+<p><strong>核心要点</strong>：</p>
+<ul>
+<li>✅ Docker 部署优先，国内使用阿里云镜像</li>
+<li>✅ 重点关注 Wake Lock、CPU、网络、定位四大指标</li>
+<li>✅ 结合实际用户场景进行针对性优化</li>
+<li>✅ 养成性能优化的良好习惯</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>sanbo
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://hhhaiai.github.io/p/e0a8d029/" title="Battery Historian 分析 Android 耗电问题实战教程">https://hhhaiai.github.io/p/e0a8d029/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://x.com/sanbo110">
+            <span class="icon">
+              <i class="fa fa-X"></i>
+            </span>
+
+            <span class="label">X</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AE%89%E5%8D%93/" rel="tag"><i class="fa fa-tag"></i> 安卓</a>
+              <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"><i class="fa fa-tag"></i> 技术</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/p/2d0c2935/" rel="prev" title="热烈庆贺打井队成立">
+      <i class="fa fa-chevron-left"></i> 热烈庆贺打井队成立
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/p/2d0c2333/" rel="next" title="转瞬而去的2024">
+      转瞬而去的2024 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Battery-Historian-%E5%B7%A5%E5%85%B7%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">Battery Historian 工具概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E5%8E%9F%E7%90%86"><span class="nav-number">1.1.</span> <span class="nav-text">核心技术原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Batterystats-%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86"><span class="nav-number">1.1.1.</span> <span class="nav-text">Batterystats 数据收集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Historian-%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="nav-number">1.1.2.</span> <span class="nav-text">Historian 数据可视化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.2.</span> <span class="nav-text">适用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97"><span class="nav-number">1.3.</span> <span class="nav-text">Docker 部署指南</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E9%83%A8%E7%BD%B2%E6%96%B9%E5%BC%8F"><span class="nav-number">1.3.1.</span> <span class="nav-text">推荐部署方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%83%A8%E7%BD%B2%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.3.2.</span> <span class="nav-text">常见部署问题与解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%981-%E5%AE%98%E6%96%B9%E9%95%9C%E5%83%8F%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">问题1: 官方镜像无法访问</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%982-D3-js-%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E5%A4%B1%E8%B4%A5"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">问题2: D3.js 资源加载失败</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%983-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%97%A0%E5%93%8D%E5%BA%94"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">问题3: 文件上传无响应</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98"><span class="nav-number">1.4.</span> <span class="nav-text">数据分析实战</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-1-%E6%94%B6%E9%9B%86%E7%94%B5%E6%B1%A0%E6%95%B0%E6%8D%AE"><span class="nav-number">1.4.1.</span> <span class="nav-text">Step 1: 收集电池数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-2-%E5%88%86%E6%9E%90%E7%94%B5%E6%B1%A0%E6%8A%A5%E5%91%8A"><span class="nav-number">1.4.2.</span> <span class="nav-text">Step 2: 分析电池报告</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-3-%E5%85%B3%E9%94%AE%E6%8C%87%E6%A0%87%E8%A7%A3%E8%AF%BB"><span class="nav-number">1.4.3.</span> <span class="nav-text">Step 3: 关键指标解读</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E9%98%B6%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE"><span class="nav-number">1.5.</span> <span class="nav-text">进阶优化建议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%97%E7%94%B5%E4%BC%98%E5%8C%96%E6%96%B9%E5%90%91"><span class="nav-number">1.5.1.</span> <span class="nav-text">耗电优化方向</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%BA%90"><span class="nav-number">1.6.</span> <span class="nav-text">参考资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.7.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="sanbo"
+      src="https://raw.githubusercontent.com/hhhaiai/Picture/main/img/202501190050490.png">
+  <p class="site-author-name" itemprop="name">sanbo</p>
+  <div class="site-description" itemprop="description">专业打井队提供数据采集、音视频开发、技术管理和AI量化研究的实战经验与深度分析。专注从0到1的技术架构与团队管理优化。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/hhhaiai" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hhhaiai" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/sanbo110" title="X → https:&#x2F;&#x2F;x.com&#x2F;sanbo110" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>X</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sanbo.xyz@gmail.com" title="E-Mail → mailto:sanbo.xyz@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i>RSS</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://simitalk.com/" title="http:&#x2F;&#x2F;simitalk.com&#x2F;" rel="noopener" target="_blank">私米</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.simitalk.top/" title="https:&#x2F;&#x2F;www.simitalk.top&#x2F;" rel="noopener" target="_blank">SimiTalk</a>
+        </li>
+    </ul>
+  </div>
+
+
+
+
+
+  <div class="sidebar-card motion-element">
+    <div class="sidebar-card-title">
+      <i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i> 最新文章
+    </div>
+    <div class="sidebar-card-content">
+      <ul class="sidebar-card-list">
+          <li class="sidebar-card-item">
+            <a href="/p/2d0c2333/" title="转瞬而去的2024">
+              转瞬而去的2024
+            </a>
+            <span class="post-date" style="font-size: 0.85em; color: #888;">
+              01-20
+            </span>
+          </li>
+          <li class="sidebar-card-item">
+            <a href="/p/e0a8d029/" title="Battery Historian 分析 Android 耗电问题实战教程">
+              Battery Historian 分析 Android 耗电问题实战教程
+            </a>
+            <span class="post-date" style="font-size: 0.85em; color: #888;">
+              07-17
+            </span>
+          </li>
+          <li class="sidebar-card-item">
+            <a href="/p/2d0c2935/" title="热烈庆贺打井队成立">
+              热烈庆贺打井队成立
+            </a>
+            <span class="post-date" style="font-size: 0.85em; color: #888;">
+              11-01
+            </span>
+          </li>
+      </ul>
+    </div>
+  </div>
+
+
+
+  <div class="sidebar-card motion-element">
+    <div class="sidebar-card-title">
+      <i class="fa fa-fire fa-fw" aria-hidden="true"></i> 全站热门
+    </div>
+    <div class="sidebar-card-content">
+      <ul class="sidebar-card-list">
+          <li class="sidebar-card-item">
+            <a href="/p/2d0c2333/" title="转瞬而去的2024">
+              转瞬而去的2024
+            </a>
+          </li>
+          <li class="sidebar-card-item">
+            <a href="/p/e0a8d029/" title="Battery Historian 分析 Android 耗电问题实战教程">
+              Battery Historian 分析 Android 耗电问题实战教程
+            </a>
+          </li>
+          <li class="sidebar-card-item">
+            <a href="/p/2d0c2935/" title="热烈庆贺打井队成立">
+              热烈庆贺打井队成立
+            </a>
+          </li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="sidebar-card motion-element">
+    <div class="sidebar-card-title">
+      <i class="fa fa-folder-o fa-fw" aria-hidden="true"></i> 分类
+    </div>
+    <div class="sidebar-card-content">
+      <ul class="sidebar-card-list">
+          <li class="sidebar-card-item">
+            <a href="/categories/%E5%BC%80%E5%8F%91/" title="开发">
+              开发
+            </a>
+            <span class="post-count" style="color: #888;">
+              (1)
+            </span>
+          </li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="sidebar-card motion-element">
+    <div class="sidebar-card-title">
+      <i class="fa fa-tags fa-fw" aria-hidden="true"></i> 标签
+    </div>
+    <div class="sidebar-card-content">
+      <div class="tags">
+          <a href="/tags/%E5%AE%89%E5%8D%93/" class="tag" title="安卓" rel="index">
+            安卓<sup>1</sup>
+          </a>
+          <a href="/tags/%E6%8A%80%E6%9C%AF/" class="tag" title="技术" rel="index">
+            技术<sup>1</sup>
+          </a>
+          <a href="/tags/%E8%A7%84%E5%88%92/" class="tag" title="规划" rel="index">
+            规划<sup>1</sup>
+          </a>
+          <a href="/tags/%E9%97%B2%E8%81%8A/" class="tag" title="闲聊" rel="index">
+            闲聊<sup>2</sup>
+          </a>
+          <a href="/tags/%E9%A2%84%E5%91%8A/" class="tag" title="预告" rel="index">
+            预告<sup>1</sup>
+          </a>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="sidebar-card motion-element">
+    <div class="sidebar-card-title">
+      <i class="fa fa-archive fa-fw" aria-hidden="true"></i> 归档
+    </div>
+    <div class="sidebar-card-content">
+      <ul class="sidebar-card-list">
+          <li class="sidebar-card-item">
+            <a href="/archives/2020-07/" title="2020-07">
+              2020-07
+            </a>
+          </li>
+          <li class="sidebar-card-item">
+            <a href="/archives/2019-11/" title="2019-11">
+              2019-11
+            </a>
+          </li>
+          <li class="sidebar-card-item">
+            <a href="/archives/2025-01/" title="2025-01">
+              2025-01
+            </a>
+          </li>
+      </ul>
+    </div>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sanbo</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+
+<div class="footer-sitemap">
+  <div class="sitemap-links">
+    <strong>站点地图:</strong>
+    <a href="https://hhhaiai.github.io/" title="首页">首页</a> |
+    <a href="https://hhhaiai.github.io/tags/" title="标签">标签</a> |
+    <a href="https://hhhaiai.github.io/archives/" title="归档">归档</a> |
+    <a href="https://hhhaiai.github.io/about/" title="关于">关于</a> |
+    <a href="https://hhhaiai.github.io/sitemap.xml" title="Sitemap XML">Sitemap XML</a> |
+    <a href="https://hhhaiai.github.io/atom.xml" title="RSS Feed">RSS</a>
+  </div>
+  <div class="seo-links">
+    <a href="https://search.google.com/search-console" target="_blank" rel="noopener">Google Search Console</a> |
+    <a href="https://www.google.com/webmasters/tools/home" target="_blank" rel="noopener">Google Webmasters</a>
+  </div>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'Ov23lieUawmr1RydScTk',
+      clientSecret: 'ec1449ce8abc77c62a4dd08c52087f45a666df9e',
+      repo        : 'hhhaiai.github.io',
+      owner       : 'hhhaiai',
+      admin       : ['hhhaiai'],
+      id          : '46543bf49ed08c2383647efe3b9dff9e',
+        language: 'zh-CN',
+      distractionFreeMode: false
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+    </div>
+</body>
+</html>

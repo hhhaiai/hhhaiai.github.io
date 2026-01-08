@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/favicon-32x32.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hhhaiai.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":{"gitalk":{"order":-2}},"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"fadeIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="专业打井队提供数据采集、音视频开发、技术管理和AI量化研究的实战经验与深度分析。专注从0到1的技术架构与团队管理优化。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="专业打井队 - 技术博客">
+<meta property="og:url" content="https://hhhaiai.github.io/archives/2019/11/">
+<meta property="og:site_name" content="专业打井队 - 技术博客">
+<meta property="og:description" content="专业打井队提供数据采集、音视频开发、技术管理和AI量化研究的实战经验与深度分析。专注从0到1的技术架构与团队管理优化。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="sanbo">
+<meta property="article:tag" content="技术博客, 数据采集, 音视频开发, 技术管理, AI量化, 架构设计, 项目管理, Android系统, 大数据, 安全架构">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://hhhaiai.github.io/archives/2019/11/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "专业打井队 - 技术博客",
+  "url": "https://hhhaiai.github.io",
+  "description": "专业打井队提供数据采集、音视频开发、技术管理和AI量化研究的实战经验与深度分析。专注从0到1的技术架构与团队管理优化。",
+  "logo": "https://raw.githubusercontent.com/hhhaiai/Picture/main/img/202501190050490.png",
+  "sameAs": [
+    "https://github.com/hhhaiai",
+    "https://x.com/sanbo110"
+  ]
+}
+</script>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "专业打井队 - 技术博客",
+  "url": "https://hhhaiai.github.io"
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://hhhaiai.github.io"
+    }
+    ,
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "归档",
+      "item": "https://hhhaiai.github.io/archives/"
+    }
+  ]
+}
+</script>
+
+
+
+
+<link rel="sitemap" type="application/xml" title="Sitemap" href="https://hhhaiai.github.io/sitemap.xml" />
+<link rel="alternate" type="application/atom+xml" title="RSS Feed" href="https://hhhaiai.github.io/atom.xml" />
+
+
+
+
+
+<meta name="author" content="sanbo" />
+<meta name="robots" content="index, follow" />
+<meta name="googlebot" content="index, follow" />
+
+
+<meta name="twitter:creator" content="@sanbo110" />
+<meta name="twitter:image" content="https://raw.githubusercontent.com/hhhaiai/Picture/main/img/202501190050490.png" />
+
+
+<meta name="publisher" content="专业打井队 - 技术博客" />
+<meta name="copyright" content="Copyright sanbo - All rights reserved" />
+
+
+<meta http-equiv="Content-Language" content="zh-CN" />
+
+
+<meta name="theme-color" content="#0298E0" />
+<meta name="msapplication-navbutton-color" content="#0298E0" />
+<meta name="apple-mobile-web-app-status-bar-style" content="#0298E0" />
+
+
+<meta name="rating" content="general" />
+<meta name="revisit-after" content="7 days" />
+<meta name="web_author" content="sanbo" />
+  <title>归档 | 专业打井队 - 技术博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">专业打井队 - 技术博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">数据采集 · 音视频 · 技术管理 · AI量化</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+    <div class="search-buttons-container">
+      <button class="search-clear-btn" type="button" aria-label="Clear">
+        <i class="fa fa-times"></i>
+      </button>
+      <button class="search-confirm-btn" type="button" aria-label="Search">
+        <i class="fa fa-search"></i>
+      </button>
+    </div>
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-search fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content archive">
+            
+
+  
+  
+  
+  <div class="post-block">
+    <div class="posts-collapse">
+      <div class="collection-title">
+        <span class="collection-header">嗯..! 目前共计 3 篇日志。 继续努力。</span>
+      </div>
+
+      
+    <div class="collection-year">
+      <span class="collection-header">2019</span>
+    </div>
+
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <div class="post-meta">
+        <time itemprop="dateCreated"
+              datetime="2019-11-01T16:35:07+08:00"
+              content="2019-11-01">
+          11-01
+        </time>
+      </div>
+
+      <div class="post-title">
+          <a class="post-title-link" href="/p/2d0c2935/" itemprop="url">
+            <span itemprop="name">热烈庆贺打井队成立</span>
+          </a>
+      </div>
+
+    </header>
+  </article>
+
+
+    </div>
+  </div>
+  
+  
+  
+
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="sanbo"
+      src="https://raw.githubusercontent.com/hhhaiai/Picture/main/img/202501190050490.png">
+  <p class="site-author-name" itemprop="name">sanbo</p>
+  <div class="site-description" itemprop="description">专业打井队提供数据采集、音视频开发、技术管理和AI量化研究的实战经验与深度分析。专注从0到1的技术架构与团队管理优化。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/hhhaiai" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hhhaiai" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/sanbo110" title="X → https:&#x2F;&#x2F;x.com&#x2F;sanbo110" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>X</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sanbo.xyz@gmail.com" title="E-Mail → mailto:sanbo.xyz@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i>RSS</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://simitalk.com/" title="http:&#x2F;&#x2F;simitalk.com&#x2F;" rel="noopener" target="_blank">私米</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.simitalk.top/" title="https:&#x2F;&#x2F;www.simitalk.top&#x2F;" rel="noopener" target="_blank">SimiTalk</a>
+        </li>
+    </ul>
+  </div>
+
+
+
+
+
+  <div class="sidebar-card motion-element">
+    <div class="sidebar-card-title">
+      <i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i> 最新文章
+    </div>
+    <div class="sidebar-card-content">
+      <ul class="sidebar-card-list">
+          <li class="sidebar-card-item">
+            <a href="/p/2d0c2333/" title="转瞬而去的2024">
+              转瞬而去的2024
+            </a>
+            <span class="post-date" style="font-size: 0.85em; color: #888;">
+              01-20
+            </span>
+          </li>
+          <li class="sidebar-card-item">
+            <a href="/p/e0a8d029/" title="Battery Historian 分析 Android 耗电问题实战教程">
+              Battery Historian 分析 Android 耗电问题实战教程
+            </a>
+            <span class="post-date" style="font-size: 0.85em; color: #888;">
+              07-17
+            </span>
+          </li>
+          <li class="sidebar-card-item">
+            <a href="/p/2d0c2935/" title="热烈庆贺打井队成立">
+              热烈庆贺打井队成立
+            </a>
+            <span class="post-date" style="font-size: 0.85em; color: #888;">
+              11-01
+            </span>
+          </li>
+      </ul>
+    </div>
+  </div>
+
+
+
+  <div class="sidebar-card motion-element">
+    <div class="sidebar-card-title">
+      <i class="fa fa-fire fa-fw" aria-hidden="true"></i> 全站热门
+    </div>
+    <div class="sidebar-card-content">
+      <ul class="sidebar-card-list">
+          <li class="sidebar-card-item">
+            <a href="/p/2d0c2333/" title="转瞬而去的2024">
+              转瞬而去的2024
+            </a>
+          </li>
+          <li class="sidebar-card-item">
+            <a href="/p/e0a8d029/" title="Battery Historian 分析 Android 耗电问题实战教程">
+              Battery Historian 分析 Android 耗电问题实战教程
+            </a>
+          </li>
+          <li class="sidebar-card-item">
+            <a href="/p/2d0c2935/" title="热烈庆贺打井队成立">
+              热烈庆贺打井队成立
+            </a>
+          </li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="sidebar-card motion-element">
+    <div class="sidebar-card-title">
+      <i class="fa fa-folder-o fa-fw" aria-hidden="true"></i> 分类
+    </div>
+    <div class="sidebar-card-content">
+      <ul class="sidebar-card-list">
+          <li class="sidebar-card-item">
+            <a href="/categories/%E5%BC%80%E5%8F%91/" title="开发">
+              开发
+            </a>
+            <span class="post-count" style="color: #888;">
+              (1)
+            </span>
+          </li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="sidebar-card motion-element">
+    <div class="sidebar-card-title">
+      <i class="fa fa-tags fa-fw" aria-hidden="true"></i> 标签
+    </div>
+    <div class="sidebar-card-content">
+      <div class="tags">
+          <a href="/tags/%E5%AE%89%E5%8D%93/" class="tag" title="安卓" rel="index">
+            安卓<sup>1</sup>
+          </a>
+          <a href="/tags/%E6%8A%80%E6%9C%AF/" class="tag" title="技术" rel="index">
+            技术<sup>1</sup>
+          </a>
+          <a href="/tags/%E8%A7%84%E5%88%92/" class="tag" title="规划" rel="index">
+            规划<sup>1</sup>
+          </a>
+          <a href="/tags/%E9%97%B2%E8%81%8A/" class="tag" title="闲聊" rel="index">
+            闲聊<sup>2</sup>
+          </a>
+          <a href="/tags/%E9%A2%84%E5%91%8A/" class="tag" title="预告" rel="index">
+            预告<sup>1</sup>
+          </a>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="sidebar-card motion-element">
+    <div class="sidebar-card-title">
+      <i class="fa fa-archive fa-fw" aria-hidden="true"></i> 归档
+    </div>
+    <div class="sidebar-card-content">
+      <ul class="sidebar-card-list">
+          <li class="sidebar-card-item">
+            <a href="/archives/2020-07/" title="2020-07">
+              2020-07
+            </a>
+          </li>
+          <li class="sidebar-card-item">
+            <a href="/archives/2019-11/" title="2019-11">
+              2019-11
+            </a>
+          </li>
+          <li class="sidebar-card-item">
+            <a href="/archives/2025-01/" title="2025-01">
+              2025-01
+            </a>
+          </li>
+      </ul>
+    </div>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sanbo</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+
+<div class="footer-sitemap">
+  <div class="sitemap-links">
+    <strong>站点地图:</strong>
+    <a href="https://hhhaiai.github.io/" title="首页">首页</a> |
+    <a href="https://hhhaiai.github.io/tags/" title="标签">标签</a> |
+    <a href="https://hhhaiai.github.io/archives/" title="归档">归档</a> |
+    <a href="https://hhhaiai.github.io/about/" title="关于">关于</a> |
+    <a href="https://hhhaiai.github.io/sitemap.xml" title="Sitemap XML">Sitemap XML</a> |
+    <a href="https://hhhaiai.github.io/atom.xml" title="RSS Feed">RSS</a>
+  </div>
+  <div class="seo-links">
+    <a href="https://search.google.com/search-console" target="_blank" rel="noopener">Google Search Console</a> |
+    <a href="https://www.google.com/webmasters/tools/home" target="_blank" rel="noopener">Google Webmasters</a>
+  </div>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+
+    </div>
+</body>
+</html>

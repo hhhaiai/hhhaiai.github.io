@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Battery Historian 分析 Android 耗电问题实战教程</title>
+    <url>/p/e0a8d029/</url>
+    <content><![CDATA[<h1 id="Battery-Historian-工具概述"><a href="#Battery-Historian-工具概述" class="headerlink" title="Battery Historian 工具概述"></a>Battery Historian 工具概述</h1><p><strong>Battery Historian</strong> 是 Google 官方推出的 Android 耗电分析工具，与 Android 内置的 Batterystats 数据收集器配合使用。它能帮助开发者：</p>
+<ul>
+<li>📊 可视化分析应用耗电行为</li>
+<li>🔍 识别唤醒锁、GPS、后台任务等耗电源</li>
+<li>🎯 定位导致电池续航降低的具体问题</li>
+<li>⚡ 提供优化建议和最佳实践</li>
+</ul>
+<span id="more"></span>
+
+<h2 id="核心技术原理"><a href="#核心技术原理" class="headerlink" title="核心技术原理"></a>核心技术原理</h2><h3 id="Batterystats-数据收集"><a href="#Batterystats-数据收集" class="headerlink" title="Batterystats 数据收集"></a>Batterystats 数据收集</h3><p>BatteryStats 是 Android 框架内置的电池数据收集工具，记录以下关键指标：</p>
+<ul>
+<li>CPU 使用情况和唤醒事件</li>
+<li>Wi-Fi、蓝牙、GPS 等传感器状态</li>
+<li>屏幕亮灭时间</li>
+<li>应用后台活动和网络请求</li>
+<li>电池电量变化曲线</li>
+</ul>
+<h3 id="Historian-数据可视化"><a href="#Historian-数据可视化" class="headerlink" title="Historian 数据可视化"></a>Historian 数据可视化</h3><p>Battery Historian 将原始的 Batterystats 数据转换为交互式 HTML 报告，支持：</p>
+<ul>
+<li>时间轴视图展示系统事件</li>
+<li>应用级耗电详情对比</li>
+<li>按事件类型筛选分析</li>
+<li>生成可分享的详细报告</li>
+</ul>
+<h2 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h2><p>Battery Historian 特别适用于以下问题排查：</p>
+<ul>
+<li>🔔 <strong>频繁唤醒</strong>：应用是否每 10 秒触发一次唤醒导致耗电</li>
+<li>📍 <strong>GPS 持续锁定</strong>：是否未及时释放位置服务</li>
+<li>🔄 <strong>后台任务调度</strong>：作业&#x2F;同步任务是否过于频繁（每 30 秒）</li>
+<li>📡 <strong>网络请求异常</strong>：无线模块使用频率是否过高</li>
+<li>🔋 <strong>电池续航优化</strong>：识别可延迟或移除的后台任务</li>
+</ul>
+<h2 id="Docker-部署指南"><a href="#Docker-部署指南" class="headerlink" title="Docker 部署指南"></a>Docker 部署指南</h2><h3 id="推荐部署方式"><a href="#推荐部署方式" class="headerlink" title="推荐部署方式"></a>推荐部署方式</h3><p>相比源码编译，<strong>Docker 部署</strong>是最简单快捷的方式：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 步骤1: 验证 Docker 环境</span></span><br><span class="line">docker run hello-world</span><br><span class="line"></span><br><span class="line"><span class="comment"># 步骤2: 启动 Battery Historian 服务</span></span><br><span class="line">docker run --restart=always -d -p 9999:9999 gcr.io/android-battery-historian/stable:3.0 --port 9999</span><br><span class="line"></span><br><span class="line"><span class="comment"># 步骤3: 访问服务</span></span><br><span class="line"><span class="comment"># 打开浏览器访问: http://localhost:9999</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="常见部署问题与解决方案"><a href="#常见部署问题与解决方案" class="headerlink" title="常见部署问题与解决方案"></a>常见部署问题与解决方案</h3><h4 id="问题1-官方镜像无法访问"><a href="#问题1-官方镜像无法访问" class="headerlink" title="问题1: 官方镜像无法访问"></a>问题1: 官方镜像无法访问</h4><p><strong>现象</strong>：<code>gcr.io</code> 镜像地址被墙，无法下载。</p>
+<p><strong>解决方案</strong>：使用国内镜像源替代：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 替换为阿里云镜像</span></span><br><span class="line">docker run --restart=always -d -p 9999:9999 registry.cn-hangzhou.aliyuncs.com/xyz10/android-battery-historian:stable-3.0 --port 9999</span><br></pre></td></tr></table></figure>
+
+<h4 id="问题2-D3-js-资源加载失败"><a href="#问题2-D3-js-资源加载失败" class="headerlink" title="问题2: D3.js 资源加载失败"></a>问题2: D3.js 资源加载失败</h4><p><strong>现象</strong>：页面可以访问，但图表无法显示，控制台报 D3.js 404 错误。</p>
+<p><strong>解决方案</strong>：修改容器内 JS 路径配置：</p>
+<ul>
+<li>参考 GitHub Issue: <a href="https://github.com/google/battery-historian/issues/185">battery-historian#185</a></li>
+<li>修改 Docker 容器内的静态资源路径映射</li>
+</ul>
+<h4 id="问题3-文件上传无响应"><a href="#问题3-文件上传无响应" class="headerlink" title="问题3: 文件上传无响应"></a>问题3: 文件上传无响应</h4><p><strong>现象</strong>：界面正常，但上传 bugreport.zip 后无反应。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>确保访问页面的主机可以访问 Google 服务（科学上网）</li>
+<li>或使用离线分析模式，先在本地生成完整报告</li>
+</ul>
+<h2 id="数据分析实战"><a href="#数据分析实战" class="headerlink" title="数据分析实战"></a>数据分析实战</h2><h3 id="Step-1-收集电池数据"><a href="#Step-1-收集电池数据" class="headerlink" title="Step 1: 收集电池数据"></a>Step 1: 收集电池数据</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 1. 连接设备并重置电池记录</span></span><br><span class="line">adb shell dumpsys batterystats --reset</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 断开充电线，开始进行典型用户操作</span></span><br><span class="line"><span class="comment">#    (正常使用 30-60 分钟)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 生成 bugreport</span></span><br><span class="line">adb bugreport &gt; bugreport.zip</span><br></pre></td></tr></table></figure>
+
+<h3 id="Step-2-分析电池报告"><a href="#Step-2-分析电池报告" class="headerlink" title="Step 2: 分析电池报告"></a>Step 2: 分析电池报告</h3><ol>
+<li>访问 <code>http://localhost:9999</code></li>
+<li>上传 <code>bugreport.zip</code> 文件</li>
+<li>等待分析完成，查看 HTML 报告</li>
+</ol>
+<h3 id="Step-3-关键指标解读"><a href="#Step-3-关键指标解读" class="headerlink" title="Step 3: 关键指标解读"></a>Step 3: 关键指标解读</h3><p>在生成的报告中重点关注：</p>
+<ul>
+<li>⏰ <strong>Wake Lock 次数和时长</strong>：过长的唤醒锁会导致屏幕无法休眠</li>
+<li>📈 <strong>CPU 使用率</strong>：后台任务是否过度占用 CPU</li>
+<li>📡 <strong>网络活动</strong>：数据传输是否集中在某个时间段</li>
+<li>📍 <strong>定位服务</strong>：GPS 持续锁定的时间</li>
+<li>🔋 <strong>电量曲线</strong>：哪些事件导致电量快速下降</li>
+</ul>
+<h2 id="进阶优化建议"><a href="#进阶优化建议" class="headerlink" title="进阶优化建议"></a>进阶优化建议</h2><h3 id="耗电优化方向"><a href="#耗电优化方向" class="headerlink" title="耗电优化方向"></a>耗电优化方向</h3><ol>
+<li><p><strong>优化唤醒频率</strong></p>
+<ul>
+<li>减少 AlarmManager 使用频率</li>
+<li>使用 WorkManager 替代频繁轮询</li>
+</ul>
+</li>
+<li><p><strong>合理管理定位</strong></p>
+<ul>
+<li>及时释放 LocationManager</li>
+<li>使用 Fused Location Provider</li>
+</ul>
+</li>
+<li><p><strong>后台任务优化</strong></p>
+<ul>
+<li>批量化网络请求</li>
+<li>使用 JobScheduler 合并任务</li>
+</ul>
+</li>
+<li><p><strong>资源释放</strong></p>
+<ul>
+<li>完整释放 WakeLock</li>
+<li>及时关闭传感器</li>
+</ul>
+</li>
+</ol>
+<h2 id="参考资源"><a href="#参考资源" class="headerlink" title="参考资源"></a>参考资源</h2><ul>
+<li>📚 <strong>官方文档</strong>: <a href="https://developer.android.google.cn/topic/performance/power/setup-battery-historian?hl=zh-cn">Android Developer - Battery Historian</a></li>
+<li>🛠️ <strong>工具源码</strong>: <a href="https://github.com/google/battery-historian">GitHub - battery-historian</a></li>
+<li>📖 <strong>优化案例</strong>: <a href="https://tech.meituan.com/2018/03/11/dianping-shortvideo-battery-testcase.html">美团点评 - 短视频耗电优化</a></li>
+<li>🔧 <strong>调试指南</strong>: <a href="https://developer.android.com/topic/performance/power">Android 电源管理官方文档</a></li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Battery Historian 是 Android 开发者进行电池优化的必备工具。通过 Docker 部署快速搭建环境，配合系统化的数据分析方法，能够有效定位和解决应用耗电问题，提升用户体验。</p>
+<p><strong>核心要点</strong>：</p>
+<ul>
+<li>✅ Docker 部署优先，国内使用阿里云镜像</li>
+<li>✅ 重点关注 Wake Lock、CPU、网络、定位四大指标</li>
+<li>✅ 结合实际用户场景进行针对性优化</li>
+<li>✅ 养成性能优化的良好习惯</li>
+</ul>
+]]></content>
+      <categories>
+        <category>开发</category>
+      </categories>
+      <tags>
+        <tag>安卓</tag>
+        <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>热烈庆贺打井队成立</title>
+    <url>/p/2d0c2935/</url>
+    <content><![CDATA[<hr>
+<blockquote>
+<p>热烈庆贺打井队成立！以后该博客会和大家一起探讨各种技术和相关看法</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="成员介绍"><a href="#成员介绍" class="headerlink" title="成员介绍"></a>成员介绍</h2><p>现是个人的项目</p>
+<h2 id="方向"><a href="#方向" class="headerlink" title="方向"></a>方向</h2><p>未来会从很多个专栏的方式去维护</p>
+]]></content>
+      <tags>
+        <tag>规划</tag>
+        <tag>预告</tag>
+        <tag>闲聊</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>转瞬而去的2024</title>
+    <url>/p/2d0c2333/</url>
+    <content><![CDATA[<hr>
+<h1 id="复盘下"><a href="#复盘下" class="headerlink" title="复盘下"></a>复盘下</h1><p>2024瞬间过去了，今年经历了很多，换了工作，娃儿上学了，幼儿园跑路了。。。 。。。</p>
+<span id="more"></span>
+
+<h2 id="精彩瞬间"><a href="#精彩瞬间" class="headerlink" title="精彩瞬间"></a>精彩瞬间</h2><ol>
+<li>2024年从老东家易观离开，祝老东家越来越好</li>
+<li>2024做了数据分析、安全防护、反作弊、AI翻译，AI对话</li>
+<li>认识一群志同道合的兄弟,一起做社交</li>
+<li>开始做一些认知之外的事情，逐步的推进</li>
+</ol>
+<h2 id="打算"><a href="#打算" class="headerlink" title="打算"></a>打算</h2><ol>
+<li>开始维护一个博客，分享技术，管理，技术方向</li>
+<li>利用社会化资源，搭建一个共享的AI服务，分享搭建的技术</li>
+<li>发布一些自己使用的工具方法</li>
+<li>更加聚焦,做一些意义重要的事情！</li>
+<li>立志改变世界</li>
+</ol>
+<h2 id="！重要！"><a href="#！重要！" class="headerlink" title="！重要！"></a>！重要！</h2><ol>
+<li>欢迎 o.o 同志</li>
+<li>努力做一个好父亲</li>
+<li>努力做一个好丈夫</li>
+<li>努力做一个好姑爷</li>
+<li>努力做一个好儿子</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>闲聊</tag>
+      </tags>
+  </entry>
+</search>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>专业打井队 - 技术博客</title>
+  
+  <subtitle>数据采集 · 音视频 · 技术管理 · AI量化</subtitle>
+  <link href="https://hhhaiai.github.io/atom.xml" rel="self"/>
+  
+  <link href="https://hhhaiai.github.io/"/>
+  <updated>2026-01-06T13:47:19.887Z</updated>
+  <id>https://hhhaiai.github.io/</id>
+  
+  <author>
+    <name>sanbo</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>转瞬而去的2024</title>
+    <link href="https://hhhaiai.github.io/p/2d0c2333/"/>
+    <id>https://hhhaiai.github.io/p/2d0c2333/</id>
+    <published>2025-01-20T15:45:00.000Z</published>
+    <updated>2026-01-06T13:47:19.887Z</updated>
+    
+    
+    <summary type="html">&lt;hr&gt;
+&lt;h1 id=&quot;复盘下&quot;&gt;&lt;a href=&quot;#复盘下&quot; class=&quot;headerlink&quot; title=&quot;复盘下&quot;&gt;&lt;/a&gt;复盘下&lt;/h1&gt;&lt;p&gt;2024瞬间过去了，今年经历了很多，换了工作，娃儿上学了，幼儿园跑路了。。。 。。。&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="闲聊" scheme="https://hhhaiai.github.io/tags/%E9%97%B2%E8%81%8A/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Battery Historian 分析 Android 耗电问题实战教程</title>
+    <link href="https://hhhaiai.github.io/p/e0a8d029/"/>
+    <id>https://hhhaiai.github.io/p/e0a8d029/</id>
+    <published>2020-07-17T04:18:46.000Z</published>
+    <updated>2026-01-08T07:30:00.000Z</updated>
+    
+    
+    <summary type="html">详细介绍 Battery Historian 工具使用方法，包括 Docker 部署步骤、常见问题解决、数据分析技巧，帮助 Android 开发者快速定位和优化应用耗电问题。</summary>
+    
+    
+    
+    <category term="开发" scheme="https://hhhaiai.github.io/categories/%E5%BC%80%E5%8F%91/"/>
+    
+    
+    <category term="安卓" scheme="https://hhhaiai.github.io/tags/%E5%AE%89%E5%8D%93/"/>
+    
+    <category term="技术" scheme="https://hhhaiai.github.io/tags/%E6%8A%80%E6%9C%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>热烈庆贺打井队成立</title>
+    <link href="https://hhhaiai.github.io/p/2d0c2935/"/>
+    <id>https://hhhaiai.github.io/p/2d0c2935/</id>
+    <published>2019-11-01T08:35:07.000Z</published>
+    <updated>2026-01-06T13:47:19.886Z</updated>
+    
+    
+    <summary type="html">&lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;热烈庆贺打井队成立！以后该博客会和大家一起探讨各种技术和相关看法&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    
+    <category term="规划" scheme="https://hhhaiai.github.io/tags/%E8%A7%84%E5%88%92/"/>
+    
+    <category term="预告" scheme="https://hhhaiai.github.io/tags/%E9%A2%84%E5%91%8A/"/>
+    
+    <category term="闲聊" scheme="https://hhhaiai.github.io/tags/%E9%97%B2%E8%81%8A/"/>
+    
+  </entry>
+  
+</feed>

@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+Allow: /tags/
+Allow: /categories/
+Allow: /archives/
+Allow: /about/
+Allow: /search.xml
+
+# Directives for Googlebot
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Sitemap locations for Google Search Console
+# Primary: Custom domain (simitalk.de5.net)
+Sitemap: https://simitalk.de5.net/sitemap.xml
+Sitemap: https://simitalk.de5.net/atom.xml
+
+# GitHub Pages fallback (for if needed)
+Sitemap: https://hhhaiai.github.io/sitemap.xml
+Sitemap: https://hhhaiai.github.io/atom.xml
